@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "routerpractice2",
+    "slug": "routerpractice2"
+  }
+}
