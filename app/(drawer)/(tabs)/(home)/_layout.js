@@ -6,6 +6,7 @@ import { useDrawerStatus, DrawerToggleButton } from "@react-navigation/drawer";
 import { useSegments, useRouter } from "expo-router";
 import { BackButton } from "../../../../components/backButton";
 import { Stack } from "expo-router";
+import { convertToPath } from "../../../../helpers/helpers";
 export const unstable_settings = {
   initialRouteName: "home",
 };
@@ -76,7 +77,7 @@ export default function Layout({ segment }) {
           options={{
             headerLargeTitle: true,
             title: "Search",
-            headerLeft: () => <BackButton backPath={"../"} />,
+            headerLeft: () => <BackButton backPath={convertToPath(segments)} />,
             headerSearchBarOptions: { placeholder: "Search" },
           }}
         />
