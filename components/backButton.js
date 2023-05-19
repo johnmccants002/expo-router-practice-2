@@ -1,14 +1,29 @@
 import React from "react";
-import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 
 export const BackButton = ({ onPress, backPath }) => {
+  const router = useRouter();
+
   return (
-    <Link href={`${backPath}`}>
-      <AntDesign name="arrowleft" size={24} color="black" />
-      {/* <Text style={{ marginLeft: 5 }}>Back</Text> */}
-    </Link>
+    <>
+      {Platform.OS === "ios" || Platform.OS === "android" ? (
+        <TouchableOpacity onPress={router.back}>
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </TouchableOpacity>
+      ) : (
+        <Link href={`${backPath}`}>
+          <AntDesign name="arrowleft" size={24} color="black" />
+        </Link>
+      )}
+    </>
   );
 };
 

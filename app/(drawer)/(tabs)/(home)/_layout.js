@@ -5,7 +5,7 @@ import { cardStyleInterpolator } from "../../../../components/custom-transition"
 import { useDrawerStatus, DrawerToggleButton } from "@react-navigation/drawer";
 import { useSegments, useRouter } from "expo-router";
 import { BackButton } from "../../../../components/backButton";
-
+import { Stack } from "expo-router";
 export const unstable_settings = {
   initialRouteName: "home",
 };
@@ -50,47 +50,37 @@ export default function Layout({ segment }) {
   const router = useRouter();
 
   return (
-    <View style={{ flex: 1 }}>
-      <CustomStack
-        screenOptions={{
-          ...selected[1],
-          headerLeft: (props) =>
-            lastSegment == "(home)" ? (
-              <DrawerToggleButton {...props} />
-            ) : (
-              <BackButton onPress={router.back} />
-            ),
-          headerShown: true,
-
-          // API Reference: https://reactnavigation.org/docs/stack-navigator#options
-        }}
-      />
-      <View
-        style={{
-          borderTopColor: "#eee",
-          borderTopWidth: 1,
-          backgroundColor: "white",
-        }}
+    <>
+      <Stack.Screen options={{ headerShown: false }} />
+      <Stack
+        screenOptions={
+          {
+            // API Reference: https://reactnavigation.org/docs/native-stack-navigator#options
+          }
+        }
       >
-        <Text style={{ padding: 8, opacity: 0.6 }}>
-          Press these buttons to change the layout transition{"\n"}↓ then press
-          "Next" to see the transition. ↓
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
+        <Stack.Screen
+          name="index"
+          screenOptions={{
+            headerLeft: () => <DrawerToggleButton />,
           }}
-        >
-          {animationSettings.map((value, i) => (
-            <Button
-              color={index === i ? "#2196F3" : "#ccc"}
-              title={value[0]}
-              key={String(i)}
-              onPress={() => setIndex(i)}
-            />
-          ))}
-        </View>
-      </View>
-    </View>
+          options={{
+            headerLargeTitle: true,
+            title: "Expo Router",
+            headerLeft: () => <DrawerToggleButton />,
+            headerSearchBarOptions: { placeholder: "Search" },
+          }}
+        />
+        <Stack.Screen
+          name="second"
+          options={{
+            headerLargeTitle: true,
+            title: "Search",
+            headerLeft: () => <BackButton backPath={"../"} />,
+            headerSearchBarOptions: { placeholder: "Search" },
+          }}
+        />
+      </Stack>
+    </>
   );
 }
